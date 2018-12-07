@@ -8,6 +8,7 @@ CMD_SRCS += \
 
 C_SRCS += \
 ../BumpSwitch.c \
+../DriveSystem.c \
 ../LidarSensors.c \
 ../LineSensors.c \
 ../MotorEncoder.c \
@@ -17,6 +18,7 @@ C_SRCS += \
 
 C_DEPS += \
 ./BumpSwitch.d \
+./DriveSystem.d \
 ./LidarSensors.d \
 ./LineSensors.d \
 ./MotorEncoder.d \
@@ -26,6 +28,7 @@ C_DEPS += \
 
 OBJS += \
 ./BumpSwitch.obj \
+./DriveSystem.obj \
 ./LidarSensors.obj \
 ./LineSensors.obj \
 ./MotorEncoder.obj \
@@ -35,6 +38,7 @@ OBJS += \
 
 OBJS__QUOTED += \
 "BumpSwitch.obj" \
+"DriveSystem.obj" \
 "LidarSensors.obj" \
 "LineSensors.obj" \
 "MotorEncoder.obj" \
@@ -44,6 +48,7 @@ OBJS__QUOTED += \
 
 C_DEPS__QUOTED += \
 "BumpSwitch.d" \
+"DriveSystem.d" \
 "LidarSensors.d" \
 "LineSensors.d" \
 "MotorEncoder.d" \
@@ -53,6 +58,7 @@ C_DEPS__QUOTED += \
 
 C_SRCS__QUOTED += \
 "../BumpSwitch.c" \
+"../DriveSystem.c" \
 "../LidarSensors.c" \
 "../LineSensors.c" \
 "../MotorEncoder.c" \
