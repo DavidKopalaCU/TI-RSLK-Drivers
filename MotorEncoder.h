@@ -29,6 +29,8 @@ static motor_encoder_t right_encoder;
 motor_encoder_t* motor_encoder_get_right();
 motor_encoder_t* motor_encoder_get_left();
 
+float count_to_cm(uint32_t);
+
 void MotorEncoder_Init(void);
 void PORT2_IRQHandler(void);
 

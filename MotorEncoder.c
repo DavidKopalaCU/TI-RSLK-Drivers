@@ -99,6 +99,10 @@ void MotorEncoder_Init(void) {
 
 }
 
+float count_to_cm(uint32_t count) {
+    return 22.0 * (count / 360.0);
+}
+
 motor_encoder_t* motor_encoder_get_right() {
     return &right_encoder;
 }

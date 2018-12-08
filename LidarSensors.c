@@ -12,16 +12,18 @@
 
 void LidarSensors_Init(void) {
     ADC0_InitSWTriggerCh15();
+    ADC0_InitSWTriggerCh14();
+    ADC0_InitSWTriggerCh16();
 }
 
-uint32_t lidar_right_read(void) {
+uint32_t lidar_forward_read(void) {
     return ADC_In15();
 }
 
-uint32_t lidar_straight_read(void) {
-    return 0;
+uint32_t lidar_right_read(void) {
+    return ADC_In16();
 }
 
 uint32_t lidar_left_read(void) {
-    return 0;
+    return ADC_In14();
 }
