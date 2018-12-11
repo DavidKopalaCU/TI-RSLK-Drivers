@@ -30,7 +30,6 @@ void MotorEncoder_Init(void) {
 
     // Allow interrupts to happen
     NVIC_EnableIRQ(PORT2_IRQn);
-    __enable_interrupt();
 
     return;
 

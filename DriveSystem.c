@@ -34,8 +34,7 @@ void DriveSystem_Init(uint32_t duty_period) {
     PWM_Init12(motor_period, 0, 0);
 }
 
-
-void drive_forward_cm(float cm, float speed) {
+void drive_straight_cm(float cm, float speed) {
     float right_on = speed, left_on = speed;
 
     uint32_t count = (cm / 22.0) * 360.0;
@@ -53,32 +52,57 @@ void drive_forward_cm(float cm, float speed) {
             break;
         }
 
-        if ((left_diff - right_diff) > 50) {
-            left_on -= 0.01;
-            right_on += 0.01;
-        } else if ((right_diff - left_diff) > 50) {
-            right_on -= 0.01;
-            left_on += 0.01;
-        }
+//        if ((recalc_cnt++) >= 10000) {
+//            recalc_cnt = 0;
+//            if (left_diff > right_diff) {
+//                last_right_speed = speed + 0.005;
+//            } else if (left_diff < right_diff) {
+//               last_right_speed = speed + 0.005;
+//            }
+//
+//            drive_left_speed(speed);
+//            drive_right_speed(last_right_speed);
+//        }
 
-        if (left_on >= 0.5) {
-            left_on = 0.5;
-        }
-        if (left_on <= 0.01) {
-            left_on = 0.01;
-        }
-        if (right_on >= 0.5) {
-            right_on = 0.5;
-        }
-        if (right_on <= 0.01) {
-            right_on = 0.01;
-        }
+//        if ((left_diff - right_diff) > 50) {
+//            left_on -= 0.01;
+//            right_on += 0.01;
+//        } else if ((right_diff - left_diff) > 50) {
+//            right_on -= 0.01;
+//            left_on += 0.01;
+//        }
+//
+//        if (left_on >= 0.5) {
+//            left_on = 0.5;
+//        }
+//        if (left_on <= 0.01) {
+//            left_on = 0.01;
+//        }
+//        if (right_on >= 0.5) {
+//            right_on = 0.5;
+//        }
+//        if (right_on <= 0.01) {
+//            right_on = 0.01;
+//        }
 
-        PWM_Duty1(left_on * motor_period);
-        PWM_Duty2(right_on * motor_period);
+        float left_on = ((((float)right_diff)  + 1) / (((float)left_diff) + 1)) * speed;
+        float right_on = speed;
+
+        drive_left_speed(left_on);
+        drive_right_speed(right_on);
     }
 }
 
+void drive_forward_cm(float cm, float speed) {
+    P1->OUT &= ~(BIT6 | BIT7);
+    drive_straight_cm(cm, speed);
+}
+
+void drive_backward_cm(float cm, float speed) {
+    P1->OUT |= (BIT6 | BIT7);
+    drive_straight_cm(cm, speed);
+    P1->OUT &= ~(BIT6 | BIT7);
+}
 
 void drive_turn_right(void) {
     // Turn left forward
@@ -89,8 +113,8 @@ void drive_turn_right(void) {
 
     uint32_t first_left_cnt = left_encoder_p->count;
     uint32_t first_right_cnt = right_encoder_p->count;
-    PWM_Duty1(0.1 * motor_period);
-    PWM_Duty2(0.1 * motor_period);
+    PWM_Duty1(0.2 * motor_period);
+    PWM_Duty2(0.2 * motor_period);
     while (1) {
         uint32_t left_diff = left_encoder_p->count - first_left_cnt;
         uint32_t right_diff = right_encoder_p->count - first_right_cnt;
@@ -118,8 +142,8 @@ void drive_turn_left(void) {
 
     uint32_t first_left_cnt = left_encoder_p->count;
     uint32_t first_right_cnt = right_encoder_p->count;
-    PWM_Duty1(0.1 * motor_period);
-    PWM_Duty2(0.1 * motor_period);
+    PWM_Duty1(0.2 * motor_period);
+    PWM_Duty2(0.2 * motor_period);
     while (1) {
         uint32_t left_diff = left_encoder_p->count - first_left_cnt;
         uint32_t right_diff = right_encoder_p->count - first_right_cnt;
@@ -147,8 +171,8 @@ void drive_pivot_cw(uint16_t degrees) {
 
     uint32_t first_left_cnt = left_encoder_p->count;
     uint32_t first_right_cnt = right_encoder_p->count;
-    PWM_Duty1(0.1 * motor_period);
-    PWM_Duty2(0.1 * motor_period);
+    PWM_Duty1(0.2 * motor_period);
+    PWM_Duty2(0.2 * motor_period);
     while (1) {
         uint32_t left_diff = left_encoder_p->count - first_left_cnt;
         uint32_t right_diff = right_encoder_p->count - first_right_cnt;
@@ -173,8 +197,8 @@ void drive_pivot_ccw(uint16_t degrees) {
 
     uint32_t first_left_cnt = left_encoder_p->count;
     uint32_t first_right_cnt = right_encoder_p->count;
-    PWM_Duty1(0.1 * motor_period);
-    PWM_Duty2(0.1 * motor_period);
+    PWM_Duty1(0.2 * motor_period);
+    PWM_Duty2(0.2 * motor_period);
     while (1) {
        uint32_t left_diff = left_encoder_p->count - first_left_cnt;
        uint32_t right_diff = right_encoder_p->count - first_right_cnt;

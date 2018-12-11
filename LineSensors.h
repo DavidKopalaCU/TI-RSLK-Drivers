@@ -14,6 +14,8 @@
 #include "msp.h"
 #include "../inc/SysTick.h"
 
+#include "../MazeDrivers/DriveSystem.h"
+
 #define MAX_LINE_SENSORS 8
 
 typedef struct line_sensor {
@@ -50,6 +52,8 @@ void line_sensor_reset(line_sensor_t *line_sensor);
 void line_sensor_reset_all(void);
 
 uint32_t line_sensor_read(line_sensor_t *line_sensor);
+
+void line_sensor_auto_cal(void);
 
 static volatile  uint8_t line_sensor_count = 0;
 uint8_t line_sensor_get_count();

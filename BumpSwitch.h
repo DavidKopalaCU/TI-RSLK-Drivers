@@ -17,4 +17,8 @@
 
 void BumpSwitches_Init(void(*task)(uint8_t));
 
+static uint8_t bump_trigger_val = 0;
+uint8_t bump_is_triggered(void);
+void bump_clear_trigger(void);
+
 #endif /* BUMPSWITCH_H_ */

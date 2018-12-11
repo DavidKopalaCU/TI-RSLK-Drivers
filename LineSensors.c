@@ -13,6 +13,7 @@ void Init_LineSensors(void) {
 void line_sensors_add(line_sensor_t* line_sensor, DIO_PORT_Odd_Interruptable_Type* port, uint8_t bit) {
     line_sensor->port = port;
     line_sensor->bit = bit;
+    line_sensor->cal_value = 0;
 
     line_sensors_add_sensor(line_sensor);
 }
@@ -111,7 +112,15 @@ uint32_t line_sensor_read(line_sensor_t *line_sensor) {
         }
     }
 
-    return (stop - start);
+    uint32_t measured = (stop - start);
+    if (measured > 10000) {
+        measured = line_sensor->cal_value;
+    }
+    if (measured > line_sensor->cal_value) {
+        line_sensor->cal_value = measured;
+    }
+
+    return ((float) measured) / ((float) line_sensor->cal_value) * 16383;
 }
 
 uint8_t line_sensor_get_count() {
@@ -120,4 +129,43 @@ uint8_t line_sensor_get_count() {
 
 line_sensor_t **line_sensors_get() {
     return line_sensors;
+}
+
+void line_sensor_auto_cal(void) {
+    uint16_t i = 0, j = 0;
+
+    // Drive Forward 10 cm
+    for (i = 0; i < 10; i++) {
+        drive_forward_cm(1, 0.3);
+        for (j = 0; j < MAX_LINE_SENSORS; j++) {
+            line_sensor_read(line_sensors[j]);
+        }
+    }
+
+    // Drive backward 20 cm
+    for (i = 0; i < 10; i++) {
+        drive_backward_cm(1, 0.3);
+        for (j = 0; j < MAX_LINE_SENSORS; j++) {
+            line_sensor_read(line_sensors[j]);
+        }
+    }
+
+    drive_turn_left();
+
+    for (i = 0; i < 10; i++) {
+        drive_forward_cm(1, 0.3);
+        for (j = 0; j < MAX_LINE_SENSORS; j++) {
+            line_sensor_read(line_sensors[j]);
+        }
+    }
+
+    // Drive backward 20 cm
+    for (i = 0; i < 10; i++) {
+        drive_backward_cm(1, 0.3);
+        for (j = 0; j < MAX_LINE_SENSORS; j++) {
+            line_sensor_read(line_sensors[j]);
+        }
+    }
+
+    drive_turn_right();
 }

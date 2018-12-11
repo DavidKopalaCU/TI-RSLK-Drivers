@@ -18,6 +18,10 @@ LineSensors.obj: /Applications/ti/ccsv8/ccs_base/arm/include/CMSIS/cmsis_compile
 LineSensors.obj: /Applications/ti/ccsv8/ccs_base/arm/include/CMSIS/cmsis_ccs.h
 LineSensors.obj: /Applications/ti/ccsv8/ccs_base/arm/include/system_msp432p401r.h
 LineSensors.obj: ../../MazeDrivers/../inc/SysTick.h
+LineSensors.obj: ../../MazeDrivers/../MazeDrivers/DriveSystem.h
+LineSensors.obj: ../../MazeDrivers/../MazeDrivers/../MazeDrivers/MotorEncoder.h
+LineSensors.obj: ../../MazeDrivers/../MazeDrivers/../MazeDrivers/../inc/SysTick.h
+LineSensors.obj: ../../MazeDrivers/../MazeDrivers/../inc/PWM.h
 
 ../LineSensors.c: 
 ../../MazeDrivers/LineSensors.h: 
@@ -37,3 +41,7 @@ LineSensors.obj: ../../MazeDrivers/../inc/SysTick.h
 /Applications/ti/ccsv8/ccs_base/arm/include/CMSIS/cmsis_ccs.h: 
 /Applications/ti/ccsv8/ccs_base/arm/include/system_msp432p401r.h: 
 ../../MazeDrivers/../inc/SysTick.h: 
+../../MazeDrivers/../MazeDrivers/DriveSystem.h: 
+../../MazeDrivers/../MazeDrivers/../MazeDrivers/MotorEncoder.h: 
+../../MazeDrivers/../MazeDrivers/../MazeDrivers/../inc/SysTick.h: 
+../../MazeDrivers/../MazeDrivers/../inc/PWM.h: 

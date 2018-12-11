@@ -19,6 +19,7 @@ void drive_pivot_ccw(uint16_t degrees);
 void drive_turn_right(void);
 void drive_turn_left(void);
 
+void drive_straight_cm(float cm, float speed);
 void drive_forward_cm(float cm, float speed);
 void drive_backward_cm(float cm, float speed);
 
